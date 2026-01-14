@@ -2,11 +2,21 @@ import random
 
 from django.core.management.base import BaseCommand
 from faker import Faker
-from interviews.models import Interview, Interview_Type, Type_Choice, Question, Answer, User, \
-    InterviewStyle, PositionType, QuestionType
+from interviews.models import (
+    Interview,
+    Interview_Type,
+    Type_Choice,
+    Question,
+    Answer,
+    User,
+    InterviewStyle,
+    PositionType,
+    QuestionType,
+)
+
 
 class Command(BaseCommand):
-    help = 'Generate fake interviews'
+    help = "Generate fake interviews"
 
     def generate_interview(self, fake):
         random_number = random.randint(1, 100)
@@ -35,7 +45,9 @@ class Command(BaseCommand):
 
     def generate_question_and_answer(self, interview, fake):
         content = fake.sentence(nb_words=7)  # 임의의 질문 생성
-        question_type = fake.random_element(elements=[tag.value for tag in QuestionType])
+        question_type = fake.random_element(
+            elements=[tag.value for tag in QuestionType]
+        )
         question = Question.objects.create(
             interview=interview,
             content=content,
@@ -52,11 +64,11 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        fake = Faker(['ko_KR'])
+        fake = Faker(["ko_KR"])
 
         for _ in range(10):
             interview = self.generate_interview(fake)
             self.generate_interview_type_and_choice(interview, fake)
             self.generate_question_and_answer(interview, fake)
 
-        self.stdout.write(self.style.SUCCESS('Successfully generated fake interviews'))
+        self.stdout.write(self.style.SUCCESS("Successfully generated fake interviews"))
