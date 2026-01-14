@@ -13,7 +13,7 @@ class AWSManager:
     _s3_client = None
     _comprehend_client = None
 
-    _region_name=os.getenv("REGION_NAME")
+    _region_name = os.getenv("REGION_NAME")
 
     @classmethod
     def get_session(cls):
@@ -34,14 +34,20 @@ class AWSManager:
         if cls._region_name is not None:
             if cls._secretsmanager_client is None:
                 session = cls.get_session()
-                cls._secretsmanager_client = session.client(service_name="secretsmanager")
+                cls._secretsmanager_client = session.client(
+                    service_name="secretsmanager"
+                )
 
             get_secret_value_response = cls._secretsmanager_client.get_secret_value(
                 SecretId=secret_name
             )
             return json.loads(get_secret_value_response["SecretString"])
         else:
-            return {key[len(secret_name) + 1:]: value for key, value in os.environ.items() if key.startswith(secret_name + "_")}
+            return {
+                key[len(secret_name) + 1 :]: value
+                for key, value in os.environ.items()
+                if key.startswith(secret_name + "_")
+            }
 
     @classmethod
     def get_s3_client(cls):

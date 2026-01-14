@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
@@ -33,7 +34,6 @@ schema_view = get_schema_view(
         terms_of_service="https://www.yourproject.com/policies/terms/",
         contact=openapi.Contact(email="contact@yourproject.local"),
         license=openapi.License(name="Your Project License"),
-
     ),
     public=True,
     permission_classes=[permissions.AllowAny],
@@ -41,14 +41,12 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-
-    path("api/interviews", InterviewView.as_view(), name='interview-view'),
+    path("api/interviews", InterviewView.as_view(), name="interview-view"),
     path("api/interviews/", include("interviews.urls")),
-    path("api/resumes", ResumeView.as_view(), name='resume-view'),
+    path("api/resumes", ResumeView.as_view(), name="resume-view"),
     path("api/resumes/", include("resumes.urls")),
-    path("api/users", UserView.as_view(), name='user-view'),
+    path("api/users", UserView.as_view(), name="user-view"),
     path("api/users/", include("users.urls")),
-
     path("", include("django_prometheus.urls")),
 ]
 

@@ -50,7 +50,7 @@ services:
     networks:
       - mynetwork
     volumes:
-     # - ./celery_worker:/usr/src/app/celery_worker
+      # - ./celery_worker:/usr/src/app/celery_worker
       - shared_volume:/tmp
       - ./:/usr/src/app
 

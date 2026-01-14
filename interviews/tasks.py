@@ -4,6 +4,7 @@ from celery import shared_task
 
 from giterview.celery import app
 
+
 @shared_task
 def add(x, y):
     time.sleep(15)
@@ -22,4 +23,4 @@ def xsum(numbers):
 
 @shared_task
 def say_hello():
-    print('hwanil nim hihihi')
+    print("hwanil nim hihihi")
